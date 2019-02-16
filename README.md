@@ -1,5 +1,6 @@
 # Votebot
-My voting bot.      
+My voting bot.  
+I have not yet tested if it might make a duplicate voter ID       
 Please, do not use this to trick others that the voting is anonymous and relatively secure if you have modified it so that you decide the voting outcome.   do not use this for such a horrible thing plez. 
   
 Read all the comments (everything after a '#' is a comment) in the source code for documentation. If it looks like commented code then skip it, but everything that doesn't look like code and is a comment is probably documentation.
