@@ -24,10 +24,10 @@ async def vote(ctx, x):
         msg = "Your vote has already been cast"
         await client.send_message(ctx.message.author, msg) #Tells those that try to vote more than once that they have already voted
     else :
-        voterid = random.randint(0, 1000000)
-        while voterid in voterID:
-            voterid = random.randint(0, 1000000)
-        voterID.append(voterid)
+        voterid = random.randint(0, 1000000)# generates a random number from 0-1000000 to use as an ID so the voter can check and confirm that his/her vote has been counted
+        while voterid in voterID:# Checks if the ID already exists as to not make any duplicate
+            voterid = random.randint(0, 1000000)# Generates another ID if there is another identical ID number
+        voterID.append(voterid)# Adds the ID to the list so it can later check if there is a duplicate
         voters.append(auth) #Adds the voters name to list, just to prevent someone from voting twice or more
         subject="votes"#      Change 'votes' to whatever you want the votefile to be called, for example {subject="MoreCheetos"}
         F = open(subject, 'a+') #defines 'F', now 'F' opens a textfile called votes, if such a textfile does not exist, it creates one
