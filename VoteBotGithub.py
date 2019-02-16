@@ -11,7 +11,7 @@ voters1 = []
 voters = []
 @client.event
 async def on_ready():
-    msg="Let's get VOTING!\nYou can only vote once and you can't change your vote. Send a message (a pm) to me that says\n!vote x\nwhere x is what you vote."
+    msg="Let's get VOTING!\nYou can only vote once and you can't change your vote. Send a message (a pm) to me that says\n!vote x\nwhere x is what you vote. You will get an ID back and that ID will be written next to the vote you cast, so you can check and confirm that your vote has been counted."
     await client.send_message(discord.Object(id='Insert channel id to send info on how to use this bot on'), msg)
 
 @client.command(pass_context=True)
