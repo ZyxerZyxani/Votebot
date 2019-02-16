@@ -24,32 +24,36 @@ async def vote(ctx, x):
         msg = "Your vote has already been cast"
         await client.send_message(ctx.message.author, msg) #Tells those that try to vote more than once that they have already voted
     else :
+        voterid = random.randint(0, 1000000)
+        while voterid in voterID:
+            voterid = random.randint(0, 1000000)
+        voterID.append(voterid)
         voters.append(auth) #Adds the voters name to list, just to prevent someone from voting twice or more
         subject="votes"#      Change 'votes' to whatever you want the votefile to be called, for example {subject="MoreCheetos"}
         F = open(subject, 'a+') #defines 'F', now 'F' opens a textfile called votes, if such a textfile does not exist, it creates one
-        F.write("{}\n".format(vote)) #Adds the vote to the bottom of the textfile 'F' opens. Location should be where this script is kept.
+        F.write("{} {}\n".format(vote, voterid)) #Adds the vote to the bottom of the textfile 'F' opens. Location should be where this script is kept.
         F.close()
-        msg = "Your vote has now been cast."
+        msg = "Your vote has now been cast. Your votes ID is {}".format(voterid)
 #        async for msg in client.logs_from(ctx.message.channel):
 #            await client.delete_message(msg)
         await client.send_message(ctx.message.author, msg) #PMs the voter that their vote has been cast.
 
 ################################################################################################################
-@client.command(pass_context=True)
-async def vote1(ctx, x):#vote1 is what the bot listens for to apply the vote in this part, so '!vote' can be about one thing and '!vote1' can be about another thing
-    vote = "{}".format(x)
-    auth = "{}".format(ctx.message.author.mention)#This code surrounded by the sharps can be copied and pasted to create more simultaneous votes running at the same time. Remember to change what the bot listens for (vote1 in this example) and don't forget to change the name of the textfile (unless you are ok to mix the votes in one file)
-    if auth in voters1:#Don't forget to make a new list at the top and change the name of 'voters1' to the name of the new list if you copy this.
-        msg = "Your vote has already been cast"
-        await client.send_message(ctx.message.author, msg)
-    else :
-        voters1.append(auth)#need to change 'voters1' to the name of the new list, if you did copy and paste this code
-        subject="votes1"#change 'votes1' to something else to get the textfile that stores the votes in called something else
-        F = open(subject, 'a+')
-        F.write("{}\n".format(vote))
-        F.close()
-        msg = "Your vote has now been cast."
-        await client.send_message(ctx.message.author, msg)
+#@client.command(pass_context=True)
+#async def vote1(ctx, x):#vote1 is what the bot listens for to apply the vote in this part, so '!vote' can be about one thing and '!vote1' can be about another thing
+#    vote = "{}".format(x)
+#    auth = "{}".format(ctx.message.author.mention)#This code surrounded by the sharps can be copied and pasted to create more simultaneous votes running at the same time. Remember to change what the bot listens for (vote1 in this example) and don't forget to change the name of the textfile (unless you are ok to mix the votes in one file)
+#    if auth in voters1:#Don't forget to make a new list at the top and change the name of 'voters1' to the name of the new list if you copy this.
+#        msg = "Your vote has already been cast"
+#        await client.send_message(ctx.message.author, msg)
+#    else :
+#        voters1.append(auth)#need to change 'voters1' to the name of the new list, if you did copy and paste this code
+#        subject="votes1"#change 'votes1' to something else to get the textfile that stores the votes in called something else
+#        F = open(subject, 'a+')
+#        F.write("{}\n".format(vote))
+#        F.close()
+#        msg = "Your vote has now been cast."
+#        await client.send_message(ctx.message.author, msg)
 ##################################################################################################################
 #I haven't tested using copy of the code so I cannot guarantee that it will work flawlessly. Add a '#' at the start of every line to comment it out, to disable the line so to speak.
 #
