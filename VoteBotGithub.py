@@ -17,7 +17,7 @@ async def on_ready():
 @client.command(pass_context=True)
 async def vote(ctx, x):
     vote = "{}".format(x) #Saves the vote a person sent
-    auth = "{}".format(ctx.message.author.mention) #Saves the name of the one voting
+    auth = "{}".format(ctx.message.author.id) #Saves the name of the one voting
     if auth in voters: #Checks if the one voting has already voted
 #        async for msg in client.logs_from(ctx.message.channel):
 #            await client.delete_message(msg)
