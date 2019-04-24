@@ -6,30 +6,30 @@ import platform
 import random
 
 client = Bot(description="VoteBot By Zyxer", command_prefix="!", pm_help = False)
-
-voters1 = []
 voters = []
+g = 0
+x = 0
+y = 0
 @client.event
 async def on_ready():
-    msg="Let's get VOTING!\nYou can only vote once and you can't change your vote. Send a message (a pm) to me that says\n!vote x\nwhere x is what you vote. You will get an ID back and that ID will be written next to the vote you cast, so you can check and confirm that your vote has been counted."
+    msg="Let's get VOTING!\nYou can only vote once and you can't change your vote. Send a message (a pm) to me that says\n!vote x\nwhere x is what you vote."
     await client.send_message(discord.Object(id='Insert channel id to send info on how to use this bot on'), msg)
 
 @client.command(pass_context=True)
-async def vote(ctx, x):
-    vote = "{}".format(x) #Saves the vote a person sent
-    auth = "{}".format(ctx.message.author.id) #Saves the name of the one voting. Update was here, 'mention' was changed to id
+async def ja(ctx):
+    auth = "{}".format(ctx.message.author.id) #Saves the name of the one voting
     if auth in voters: #Checks if the one voting has already voted
 #        async for msg in client.logs_from(ctx.message.channel):
 #            await client.delete_message(msg)
         msg = "Your vote has already been cast"
-        await client.send_message(ctx.message.author, msg) #Tells those that try to vote more than once that they have already voted
+        await client.send_message(ctx.message.channel, msg) #Tells those that try to vote more than once that they have already voted
     else :
         voterid = random.randint(0, 1000000)# generates a random number from 0-1000000 to use as an ID so the voter can check and confirm that his/her vote has been counted
         while voterid in voterID:# Checks if the ID already exists as to not make any duplicate
             voterid = random.randint(0, 1000000)# Generates another ID if there is another identical ID number
         voterID.append(voterid)# Adds the ID to the list so it can later check if there is a duplicate
         voters.append(auth) #Adds the voters name to list, just to prevent someone from voting twice or more
-        subject="votes"#      Change 'votes' to whatever you want the votefile to be called, for example {subject="MoreCheetos"}
+        subject="votes{}".format(g)#      Change 'votes' to whatever you want the votefile to be called, for example {subject="MoreCheetos"}
         F = open(subject, 'a+') #defines 'F', now 'F' opens a textfile called votes, if such a textfile does not exist, it creates one
         F.write("{} {}\n".format(vote, voterid)) #Adds the vote to the bottom of the textfile 'F' opens. Location should be where this script is kept.
         F.close()
@@ -37,7 +37,36 @@ async def vote(ctx, x):
 #        async for msg in client.logs_from(ctx.message.channel):
 #            await client.delete_message(msg)
         await client.send_message(ctx.message.author, msg) #PMs the voter that their vote has been cast.
+        global x
+        x = x+1
+@client.command(pass_context=True)
+async def nej(ctx):
+    auth = "{}".format(ctx.message.author.mention) #Saves the name of the one voting
+    if auth in voters: #Checks if the one voting has already voted
+#        async for msg in client.logs_from(ctx.message.channel):
+#            await client.delete_message(msg)
+        msg = "Your vote has already been cast"
+        await client.send_message(ctx.message.channel, msg) #Tells those that try to vote more than once that they have already voted
+    else :
+        voters.append(auth) #Adds the voters name to list, just to prevent someone from voting twice or more
+        msg = "Your vote has now been cast."
+#        async for msg in client.logs_from(ctx.message.channel):
+#            await client.delete_message(msg)
+        await client.send_message(ctx.message.channel, msg) #PMs the voter that their vote has been cast.
+        global y
+        y = y+1
 
+@client.command(pass_context=True)
+async def votes(ctx):
+    global g
+    global x
+    global y
+    msg = "{} ja\n{} nej".format(x, y)
+    await client.send_message(ctx.message.channel, msg)
+    x = 0
+    y = 0
+    g = g+1
+    voters[:] = []
 ################################################################################################################
 #@client.command(pass_context=True)
 #async def vote1(ctx, x):#vote1 is what the bot listens for to apply the vote in this part, so '!vote' can be about one thing and '!vote1' can be about another thing
